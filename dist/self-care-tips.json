@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "text": "Sleep 9 Hours",
+    "active": true
+  },
+  {
+    "id": "2", 
+    "text": "Eat Healthy",
+    "active": true
+  },
+  {
+    "id": "3",
+    "text": "Exercise",
+    "active": true
+  },
+  {
+    "id": "4",
+    "text": "Go Outside",
+    "active": true
+  }
+]

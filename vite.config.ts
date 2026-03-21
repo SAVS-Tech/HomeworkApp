@@ -12,7 +12,7 @@ export default defineConfig({
   },
   base: '/HomeworkApp/',
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     assetsDir: 'assets',
   },
 });

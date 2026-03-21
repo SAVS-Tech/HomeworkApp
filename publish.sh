@@ -67,4 +67,3 @@ git push origin "v$NEW_VERSION"
 
 echo "🎉 Publish complete!"
 echo "🌐 Your app will be available at: https://savs-tech.github.io/HomeworkApp/"
-echo "📋 GitHub Actions will automatically build and deploy your changes"
