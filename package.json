@@ -1,11 +1,13 @@
 {
   "name": "Homework Planner",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "publish": "./publish.sh"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
