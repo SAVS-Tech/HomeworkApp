@@ -1,4 +1,4 @@
-import { Home, PenSquare, Calendar, Heart } from 'lucide-react';
+import { Home, PenSquare, Calendar, Heart, Settings } from 'lucide-react';
 import type { View } from '../App';
 
 interface NavigationProps {
@@ -12,6 +12,7 @@ export const Navigation = ({ currentView, onViewChange }: NavigationProps) => {
     { id: 'assignment' as const, label: 'New', icon: PenSquare },
     { id: 'schedule' as const, label: 'Schedule', icon: Calendar },
     { id: 'selfcare' as const, label: 'Self Care', icon: Heart },
+    { id: 'settings' as const, label: 'Settings', icon: Settings },
   ];
 
   return (

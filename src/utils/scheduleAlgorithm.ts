@@ -1,8 +1,8 @@
 import { Assignment } from '../types/assignment';
 import { ScheduleBlock } from '../types/schedule';
-import { addDays, isBefore, startOfWeek, format } from 'date-fns';
+import { addDays, isBefore, startOfWeek, format, parseISO } from 'date-fns';
 
-export const generateSchedule = (assignments: Assignment[]): ScheduleBlock[] => {
+export const generateSchedule = (assignments: Assignment[], defaultStartTime = 9, defaultEndTime = 20): ScheduleBlock[] => {
   const sortedAssignments = [...assignments]
     .filter(a => !a.completed)
     .sort((a, b) => {
@@ -20,29 +20,75 @@ export const generateSchedule = (assignments: Assignment[]): ScheduleBlock[] => 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const weekStart = startOfWeek(today, { weekStartsOn: 1 });
-    let currentDay = new Date(Math.max(weekStart.getTime(), today.getTime()));
+    // Use preferred start date if available, otherwise start from today or week start
+    let currentDay: Date;
+    if (assignment.preferredStartDate) {
+      currentDay = parseISO(assignment.preferredStartDate);
+      currentDay.setHours(0, 0, 0, 0);
+    } else {
+      const weekStart = startOfWeek(today, { weekStartsOn: 1 });
+      currentDay = new Date(Math.max(weekStart.getTime(), today.getTime()));
+    }
 
-    while (remainingHours > 0 && isBefore(currentDay, addDays(dueDate, 1))) {
+    // Allow scheduling on the due date itself
+    while (remainingHours > 0 && !isBefore(addDays(dueDate, 1), currentDay)) {
       const dateStr = format(currentDay, 'yyyy-MM-dd');
       const currentDayHours = scheduledHours[dateStr] || 0;
 
-      if (currentDayHours < 6) {
-        const hour = 12 + currentDayHours;
-        blocks.push({
-          id: `${assignment.id}-${dateStr}-${hour}`,
-          assignmentId: assignment.id,
-          date: dateStr,
-          hour,
-          title: assignment.title,
-          importance: assignment.importance,
-          dueDate: assignment.dueDate,
-        });
-        scheduledHours[dateStr] = currentDayHours + 1;
-        remainingHours--;
+      // Calculate max hours per day based on settings
+      const maxHoursPerDay = defaultEndTime - defaultStartTime;
+      const availableHours = maxHoursPerDay - currentDayHours;
+      
+      // Schedule as many consecutive hours as possible on this day
+      let hoursToSchedule: number;
+      
+      if (assignment.allowSplit === false) {
+        // If not allowed to split, only schedule if all remaining hours fit on this day
+        hoursToSchedule = availableHours >= remainingHours ? remainingHours : 0;
+      } else {
+        // Otherwise, schedule as many as possible
+        hoursToSchedule = Math.min(remainingHours, availableHours);
+      }
+      
+      if (hoursToSchedule > 0) {
+        // Use preferred start time on the preferred start date, otherwise use default start time
+        let startHour = defaultStartTime;
+        const isPreferredDay = assignment.preferredStartDate && 
+          format(parseISO(assignment.preferredStartDate), 'yyyy-MM-dd') === dateStr;
+        
+        if (isPreferredDay && assignment.preferredStartDate) {
+          const preferredDateTime = parseISO(assignment.preferredStartDate);
+          const preferredHour = preferredDateTime.getHours();
+          // Use the exact preferred hour if it's within bounds
+          if (preferredHour >= defaultStartTime && preferredHour < defaultEndTime) {
+            startHour = preferredHour;
+          }
+        }
+        
+        // Schedule consecutive hours
+        for (let i = 0; i < hoursToSchedule; i++) {
+          const hour = startHour + currentDayHours + i;
+          if (hour < defaultEndTime) {
+            blocks.push({
+              id: `${assignment.id}-${dateStr}-${hour}`,
+              assignmentId: assignment.id,
+              date: dateStr,
+              hour,
+              title: assignment.title,
+              importance: assignment.importance,
+              dueDate: assignment.dueDate,
+            });
+          }
+        }
+        
+        scheduledHours[dateStr] = currentDayHours + hoursToSchedule;
+        remainingHours -= hoursToSchedule;
       }
 
-      currentDay = addDays(currentDay, 1);
+      // Move to next day if there are remaining hours
+      if (remainingHours > 0) {
+        currentDay = addDays(currentDay, 1);
+      }
     }
   });
 

@@ -5,8 +5,9 @@ import { Dashboard } from './components/Dashboard';
 import { AssignmentForm } from './components/AssignmentForm';
 import { ScheduleView } from './components/ScheduleView';
 import { SelfCare } from './components/SelfCare';
+import { Settings } from './components/Settings';
 
-export type View = 'dashboard' | 'assignment' | 'schedule' | 'selfcare';
+export type View = 'dashboard' | 'assignment' | 'schedule' | 'selfcare' | 'settings';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
@@ -17,6 +18,7 @@ function App() {
       case 'assignment': return 'Assignment';
       case 'schedule': return 'Schedule';
       case 'selfcare': return 'Self Care';
+      case 'settings': return 'Settings';
     }
   };
 
@@ -30,6 +32,8 @@ function App() {
         return <ScheduleView />;
       case 'selfcare':
         return <SelfCare />;
+      case 'settings':
+        return <Settings />;
       default:
         return null;
     }

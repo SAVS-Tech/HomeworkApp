@@ -28,6 +28,7 @@ export const AssignmentForm = ({ onBack }: AssignmentFormProps) => {
   const [importance, setImportance] = useState<Importance>('medium');
   const [stressLevel, setStressLevel] = useState(3);
   const [estimatedHours, setEstimatedHours] = useState(1);
+  const [allowSplit, setAllowSplit] = useState(true);
 
   const monthStart = startOfMonth(calendarDate);
   const monthEnd = endOfMonth(calendarDate);
@@ -48,7 +49,8 @@ export const AssignmentForm = ({ onBack }: AssignmentFormProps) => {
       importance, 
       estimatedHours, 
       stressLevel,
-      preferredStartDate: preferredStartDateTime
+      preferredStartDate: preferredStartDateTime,
+      allowSplit
     });
     onBack();
   };
@@ -135,10 +137,10 @@ export const AssignmentForm = ({ onBack }: AssignmentFormProps) => {
           </div>
         </div>
 
-        {/* Preferred Start Date & Time (Optional) */}
+        {/* Preferred Start Date & Time */}
         <div className="mb-8">
           <label className="font-display text-cream-text text-sm md:text-base tracking-wide block mb-3">
-            Preferred Start Date & Time (Optional)
+            When would you like to work on this?
           </label>
           <div className="space-y-3">
             <div className="flex justify-center">
@@ -166,6 +168,9 @@ export const AssignmentForm = ({ onBack }: AssignmentFormProps) => {
                 }`}
               />
             </div>
+            <p className="text-center font-display text-cream-text/50 text-xs">
+              Optional: Schedule specific date/time to work on this assignment
+            </p>
           </div>
         </div>
 
@@ -237,6 +242,28 @@ export const AssignmentForm = ({ onBack }: AssignmentFormProps) => {
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Split Across Days */}
+        <div className="mb-6">
+          <label className="font-display text-cream-text text-sm md:text-base tracking-wide block mb-3">
+            Split Across Days
+          </label>
+          <div className="flex justify-center">
+            <button
+              onClick={() => setAllowSplit(!allowSplit)}
+              className={`px-6 py-2 rounded-full font-display text-sm tracking-wide transition-all ${
+                allowSplit
+                  ? 'bg-green-600/30 text-green-300 border-2 border-green-600/50'
+                  : 'bg-cream-text/10 text-cream-text/70 border-2 border-cream-text/20'
+              }`}
+            >
+              {allowSplit ? 'YES' : 'NO'}
+            </button>
+          </div>
+          <p className="text-center font-display text-cream-text/50 text-xs mt-2">
+            {allowSplit ? 'Work can be spread across multiple days' : 'Keep work together on one day'}
+          </p>
         </div>
 
         {/* Submit */}

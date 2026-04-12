@@ -9,4 +9,5 @@ export interface Assignment {
   stressLevel: number; // 1-5
   completed: boolean;
   preferredStartDate?: string; // ISO string, optional
+  allowSplit?: boolean; // Allow splitting across days, defaults to true
 }

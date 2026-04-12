@@ -26,15 +26,26 @@ npm run typecheck
 - **date-fns** for date handling
 - **lucide-react** for icons
 - **Radix UI** for accessible components
+- **Firebase** for real-time community features
 
 ## Features
 
 - Dashboard with assignment list and priority gauges
 - Assignment form with inline calendar and stress levels
 - Weekly schedule view (12 PM - 5 PM time slots)
-- Self care tips page
-- Local storage persistence
+- Self care tips page with community sharing
+- Local storage persistence for personal data
+- Firebase integration for real-time community tips
 - Responsive design
+
+## Firebase Integration
+
+The app now supports real-time sharing of community tips through Firebase. See [Firebase Setup Guide](docs/firebase-setup.md) for configuration instructions.
+
+- **Personal Tips**: Stored locally in localStorage (private)
+- **Community Tips**: Shared via Firebase (visible to all users)
+- **Author Attribution**: Tips show who shared them
+- **Real-time Updates**: New community tips appear instantly
 
 ## Project Structure
 

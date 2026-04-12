@@ -1,15 +1,15 @@
 import { Assignment } from '../types/assignment';
 import { useAssignments } from '../hooks/useAssignments';
 import { PriorityGauge } from './PriorityGauge';
-import { format } from 'date-fns';
-import { Check } from 'lucide-react';
+import { format, isBefore, startOfDay } from 'date-fns';
+import { Check, Trash2 } from 'lucide-react';
 
 interface AssignmentItemProps {
   assignment: Assignment;
 }
 
 export const AssignmentItem = ({ assignment }: AssignmentItemProps) => {
-  const { toggleComplete } = useAssignments();
+  const { toggleComplete, deleteAssignment } = useAssignments();
 
   const getImportanceLabel = () => {
     switch (assignment.importance) {
@@ -24,6 +24,16 @@ export const AssignmentItem = ({ assignment }: AssignmentItemProps) => {
       return format(new Date(assignment.dueDate + 'T12:00:00'), 'M/d/yyyy');
     } catch {
       return assignment.dueDate;
+    }
+  };
+
+  const isOverdue = () => {
+    return isBefore(new Date(assignment.dueDate), startOfDay(new Date()));
+  };
+
+  const handleDelete = () => {
+    if (confirm(`Delete "${assignment.title}"?`)) {
+      deleteAssignment(assignment.id);
     }
   };
 
@@ -62,6 +72,15 @@ export const AssignmentItem = ({ assignment }: AssignmentItemProps) => {
           </div>
         </div>
       </div>
+
+      {/* Delete button */}
+      <button
+        onClick={handleDelete}
+        className="w-8 h-8 rounded-full border-3 border-navy/40 hover:border-red-400 hover:bg-red-900/20 flex-shrink-0 flex items-center justify-center transition-all group"
+        title="Delete assignment"
+      >
+        <Trash2 className="w-4 h-4 text-navy/60 group-hover:text-red-400" strokeWidth={2} />
+      </button>
     </div>
   );
 };
