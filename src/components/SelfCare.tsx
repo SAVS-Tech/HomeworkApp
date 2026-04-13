@@ -26,7 +26,7 @@ export const SelfCare = () => {
   useEffect(() => {
     const loadTips = async () => {
       try {
-        const response = await fetch('/self-care-tips.json');
+        const response = await fetch(`${import.meta.env.BASE_URL}self-care-tips.json`);
         if (!response.ok) {
           throw new Error('Failed to load self care tips');
         }
