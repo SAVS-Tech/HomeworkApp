@@ -14,5 +14,13 @@ export default defineConfig({
   build: {
     outDir: 'docs',
     assetsDir: 'assets',
+    // Add cache busting
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    }
   },
 });
