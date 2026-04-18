@@ -6,21 +6,13 @@ import { AssignmentForm } from './components/AssignmentForm';
 import { ScheduleView } from './components/ScheduleView';
 import { SelfCare } from './components/SelfCare';
 import { Settings } from './components/Settings';
+import { SplashScreen } from './components/SplashScreen';
 
 export type View = 'dashboard' | 'assignment' | 'schedule' | 'selfcare' | 'settings';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
-
-  const getTitle = () => {
-    switch (currentView) {
-      case 'dashboard': return 'Dashboard';
-      case 'assignment': return 'Assignment';
-      case 'schedule': return 'Schedule';
-      case 'selfcare': return 'Self Care';
-      case 'settings': return 'Settings';
-    }
-  };
+  const [showSplash, setShowSplash] = useState(true);
 
   const renderView = () => {
     switch (currentView) {
@@ -41,12 +33,8 @@ function App() {
 
   return (
     <AssignmentProvider>
-      <div className="min-h-screen bg-cream flex flex-col">
-        <header className="bg-navy py-6 px-4 text-center shadow-lg">
-          <h1 className="font-display text-cream-text text-4xl md:text-5xl tracking-wide">
-            {getTitle()}
-          </h1>
-        </header>
+      <SplashScreen onComplete={() => setShowSplash(false)} />
+      <div className={`min-h-screen bg-cream flex flex-col transition-opacity duration-500 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
         <main className="flex-1 px-4 py-6 max-w-4xl mx-auto w-full relative">
           {renderView()}
         </main>

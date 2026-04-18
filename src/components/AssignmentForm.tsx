@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Importance } from '../types/assignment';
 import { useAssignments } from '../hooks/useAssignments';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, addMonths, subMonths, getDay, isBefore, startOfDay } from 'date-fns';
+import { StudyFlowLogo } from './StudyFlowLogo';
 
 interface AssignmentFormProps {
   onBack: () => void;
@@ -65,10 +66,16 @@ export const AssignmentForm = ({ onBack }: AssignmentFormProps) => {
 
   return (
     <div className="pb-8">
-      <div className="bg-navy rounded-3xl p-6 md:p-8 border-4 border-green-600/30 shadow-xl">
-        <h2 className="font-display text-cream-text text-2xl md:text-3xl text-center mb-8">
-          New Assignment
-        </h2>
+      <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-6 md:p-8 border-4 border-green-600/30 shadow-2xl">
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <StudyFlowLogo size={48} />
+          <div>
+            <p className="text-cream-text/40 text-[10px] tracking-widest">STUDYFLOW</p>
+            <h2 className="font-display text-cream-text text-2xl md:text-3xl">
+              New Assignment
+            </h2>
+          </div>
+        </div>
 
         {/* Assignment Title */}
         <div className="mb-8">

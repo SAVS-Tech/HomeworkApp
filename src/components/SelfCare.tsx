@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { SelfCareTip } from '../types/selfCare';
 import { Plus, X, Play, Pause, RotateCcw, Edit } from 'lucide-react';
 import { addSharedTip, getSharedTips, SharedTip, testFirebaseConnection, deleteSharedTip } from '../lib/firebase';
+import { StudyFlowLogo } from './StudyFlowLogo';
 
 export const SelfCare = () => {
   const [tips, setTips] = useState<SelfCareTip[]>([]);
@@ -331,7 +332,8 @@ export const SelfCare = () => {
   if (loading) {
     return (
       <div className="pb-8">
-        <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg min-h-[400px] flex items-center justify-center">
+        <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl min-h-[400px] flex flex-col items-center justify-center">
+          <StudyFlowLogo size={64} className="mb-4" />
           <span className="font-display text-cream-text text-xl">Loading self care tips...</span>
         </div>
       </div>
@@ -341,7 +343,8 @@ export const SelfCare = () => {
   if (error) {
     return (
       <div className="pb-8">
-        <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg min-h-[400px] flex items-center justify-center">
+        <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl min-h-[400px] flex flex-col items-center justify-center">
+          <StudyFlowLogo size={64} className="mb-4" />
           <span className="font-display text-cream-text text-xl">{error}</span>
         </div>
       </div>
@@ -351,8 +354,14 @@ export const SelfCare = () => {
   return (
     <div className="pb-8 space-y-6">
       {/* Pomodoro Timer Section */}
-      <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg">
-        <h2 className="font-display text-cream-text text-2xl mb-6 tracking-wide">Pomodoro Timer</h2>
+      <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <StudyFlowLogo size={48} />
+          <div>
+            <p className="text-cream-text/40 text-[10px] tracking-widest">STUDYFLOW</p>
+            <h2 className="font-display text-cream-text text-2xl">Pomodoro Timer</h2>
+          </div>
+        </div>
         <div className="flex flex-col items-center gap-6">
           {/* Timer Display */}
           <div className={`text-7xl md:text-8xl font-display font-bold tracking-wider ${
@@ -409,7 +418,7 @@ export const SelfCare = () => {
       </div>
 
       {/* Default Tips Section */}
-      <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg">
+      <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl">
         <h2 className="font-display text-cream-text text-2xl mb-6 tracking-wide">Default Self Care Tips</h2>
         <ul className="space-y-4">
           {tips.map(tip => (
@@ -425,7 +434,7 @@ export const SelfCare = () => {
 
       {/* Shared Tips Section */}
       {sharedTips.length > 0 && (
-        <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg">
+        <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl">
           <h2 className="font-display text-cream-text text-2xl mb-6 tracking-wide">Community Tips</h2>
           <ul className="space-y-4">
             {sharedTips.map(tip => (
@@ -448,7 +457,7 @@ export const SelfCare = () => {
       )}
 
       {/* User Tips Section */}
-      <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg">
+      <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="font-display text-cream-text text-2xl tracking-wide">Your Personal Tips</h2>
           <div className="flex items-center gap-3">

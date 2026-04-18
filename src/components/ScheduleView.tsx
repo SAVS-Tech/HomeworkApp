@@ -2,6 +2,7 @@ import { useSchedule } from '../hooks/useSchedule';
 import { useSettings } from '../hooks/useSettings';
 import { format, startOfWeek, addDays, addWeeks } from 'date-fns';
 import { useState } from 'react';
+import { StudyFlowLogo } from './StudyFlowLogo';
 
 export const ScheduleView = () => {
   const { schedule } = useSchedule();
@@ -30,22 +31,37 @@ export const ScheduleView = () => {
 
   return (
     <div className="pb-8">
-      <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={() => setCurrentWeekOffset(prev => prev - 1)}
-          className="font-display text-cream-text bg-navy-light hover:bg-navy-light/80 px-4 py-2 rounded-lg transition-colors"
-        >
-          ← Previous Week
-        </button>
-        <h2 className="font-display text-white font-bold text-xl">
-          {format(weekStart, 'MMM d')} - {format(addDays(weekStart, 6), 'MMM d, yyyy')}
-        </h2>
-        <button
-          onClick={() => setCurrentWeekOffset(prev => prev + 1)}
-          className="font-display text-cream-text bg-navy-light hover:bg-navy-light/80 px-4 py-2 rounded-lg transition-colors"
-        >
-          Next Week →
-        </button>
+      <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-6 shadow-2xl mb-4 border border-navy-light/30">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <StudyFlowLogo size={48} />
+            <div>
+              <p className="text-cream-text/40 text-[10px] tracking-widest">STUDYFLOW</p>
+              <h2 className="font-display text-white font-bold text-xl">
+                Schedule
+              </h2>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setCurrentWeekOffset(prev => prev - 1)}
+              className="font-display text-cream-text bg-navy-light/50 hover:bg-navy-light/80 px-3 py-2 rounded-lg transition-colors backdrop-blur-sm"
+            >
+              ←
+            </button>
+            <button
+              onClick={() => setCurrentWeekOffset(prev => prev + 1)}
+              className="font-display text-cream-text bg-navy-light/50 hover:bg-navy-light/80 px-3 py-2 rounded-lg transition-colors backdrop-blur-sm"
+            >
+              →
+            </button>
+          </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-cream-text/10 text-center">
+          <p className="font-display text-cream-text font-bold text-lg">
+            {format(weekStart, 'MMM d')} - {format(addDays(weekStart, 6), 'MMM d, yyyy')}
+          </p>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {weekDays.map(day => {

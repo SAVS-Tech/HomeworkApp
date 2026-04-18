@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSettings } from '../hooks/useSettings';
 import { Clock, Trash2, Save } from 'lucide-react';
+import { StudyFlowLogo } from './StudyFlowLogo';
 
 export const Settings = () => {
   const { settings, updateSettings } = useSettings();
@@ -24,8 +25,14 @@ export const Settings = () => {
 
   return (
     <div className="pb-8">
-      <div className="bg-navy rounded-2xl p-8 border-2 border-navy-light shadow-lg">
-        <h2 className="font-display text-cream-text text-2xl mb-6 tracking-wide">Schedule Settings</h2>
+      <div className="bg-gradient-to-br from-navy to-navy-light rounded-3xl p-8 border-2 border-navy-light shadow-2xl">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <StudyFlowLogo size={48} />
+          <div>
+            <p className="text-cream-text/40 text-[10px] tracking-widest">STUDYFLOW</p>
+            <h2 className="font-display text-cream-text text-2xl">Settings</h2>
+          </div>
+        </div>
         
         {/* Time Range */}
         <div className="mb-8">
